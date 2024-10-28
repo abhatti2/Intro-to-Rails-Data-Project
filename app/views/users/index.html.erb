@@ -1,6 +1,6 @@
 <h1 class="text-center mb-4">Users</h1>
 
-<!-- Bootstrap Grid for the Search Form -->
+<!-- Search Form -->
 <div class="container mb-4">
   <div class="row justify-content-center">
     <div class="col-md-6">
@@ -12,11 +12,11 @@
   </div>
 </div>
 
-<!-- Bootstrap Grid for Users List -->
-<div class="container">
+<!-- Users List -->
+<div class="container mb-4">
   <div class="row">
     <% if @users.any? %>
-      <% @users.each_slice(2) do |user_row| %> <!-- Show 2 users per row for a balanced layout -->
+      <% @users.each_slice(2) do |user_row| %>
         <div class="row mb-4">
           <% user_row.each do |user| %>
             <div class="col-md-6">
@@ -31,6 +31,7 @@
         </div>
       <% end %>
     <% else %>
+      <!-- Conditional ERB: If no users are found -->
       <div class="alert alert-warning">No users found.</div>
     <% end %>
   </div>
