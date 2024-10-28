@@ -1,6 +1,6 @@
 <h1 class="text-center mb-4">Breeds</h1>
 
-<!-- Bootstrap Grid for the Search Form -->
+<!-- Search Form -->
 <div class="container mb-4">
   <div class="row justify-content-center">
     <div class="col-md-6">
@@ -12,11 +12,11 @@
   </div>
 </div>
 
-<!-- Bootstrap Grid for Breeds List -->
+<!-- Breeds List -->
 <div class="container mb-4">
   <div class="row">
     <% if @breeds.any? %>
-      <% @breeds.each_slice(3) do |breed_row| %> <!-- Show 3 breeds per row -->
+      <% @breeds.each_slice(3) do |breed_row| %>
         <div class="row">
           <% breed_row.each do |breed| %>
             <div class="col-md-4">
@@ -35,12 +35,13 @@
         </div>
       <% end %>
     <% else %>
+      <!-- Conditional ERB: If no breeds are found -->
       <div class="alert alert-warning">No breeds found.</div>
     <% end %>
   </div>
 </div>
 
-<!-- Bootstrap Grid for Google Charts Section -->
+<!-- Google Chart Section -->
 <h1 class="text-center mb-4">Breeds and Comment Counts</h1>
 
 <div class="container">
@@ -51,56 +52,30 @@
   </div>
 </div>
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
+<!-- Conditional ERB: Only load the chart if there are breeds -->
+<% if @breeds.any? %>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
 
-  function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-      ['Breed', 'Number of Comments'],
-      <% @breeds.each do |breed| %>
-        ['<%= breed.name %> (<%= breed.sub_breed if breed.sub_breed.present? %>)', <%= breed.comments_count %>],
-      <% end %>
-    ]);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Breed', 'Number of Comments'],
+        <% @breeds.each do |breed| %>
+          ['<%= breed.name %> (<%= breed.sub_breed if breed.sub_breed.present? %>)', <%= breed.comments_count %>],
+        <% end %>
+      ]);
 
-    var options = {
-      title: 'Breed Comment Counts',
-      hAxis: {title: 'Breed'},
-      vAxis: {title: 'Number of Comments'},
-      legend: 'none'
-    };
+      var options = {
+        title: 'Breed Comment Counts',
+        hAxis: {title: 'Breed'},
+        vAxis: {title: 'Number of Comments'},
+        legend: 'none'
+      };
 
-    var chart = new google.visualization.ColumnChart(document.getElementById('commentsChart'));
-    chart.draw(data, options);
-  }
-</script>
-
-<!-- Bootstrap Grid for Breeds and Comment Counts List -->
-<div class="container mb-4">
-  <div class="row">
-    <% if @breeds.any? %>
-      <% @breeds.each_slice(3) do |breed_row| %>
-        <div class="row mb-4">
-          <% breed_row.each do |breed| %>
-            <div class="col-md-4">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <strong><%= breed.name %></strong>
-                    <% if breed.sub_breed.present? %>
-                      (<%= breed.sub_breed %>)
-                    <% end %>
-                  </h5>
-                  <p class="card-text"><%= breed.comments_count %> comments</p>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-    <% else %>
-      <div class="alert alert-warning">No breeds found.</div>
-    <% end %>
-  </div>
-</div>
+      var chart = new google.visualization.ColumnChart(document.getElementById('commentsChart'));
+      chart.draw(data, options);
+    }
+  </script>
+<% end %>
