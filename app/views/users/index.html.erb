@@ -1,0 +1,37 @@
+<h1 class="text-center mb-4">Users</h1>
+
+<!-- Bootstrap Grid for the Search Form -->
+<div class="container mb-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <%= form_with url: users_path, method: :get, local: true, class: "d-flex" do |form| %>
+        <%= form.text_field :search, class: "form-control me-2", placeholder: "Search Users" %>
+        <%= form.submit "Search", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap Grid for Users List -->
+<div class="container">
+  <div class="row">
+    <% if @users.any? %>
+      <% @users.each_slice(2) do |user_row| %> <!-- Show 2 users per row for a balanced layout -->
+        <div class="row mb-4">
+          <% user_row.each do |user| %>
+            <div class="col-md-6">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title"><strong><%= user.name %></strong></h5>
+                  <p class="card-text"><%= user.email %></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="alert alert-warning">No users found.</div>
+    <% end %>
+  </div>
+</div>

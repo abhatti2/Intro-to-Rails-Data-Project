@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Dog Breeds App" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/NO2NuY1z5i5qG7yyIS5ZcF5C5i5bB1/h8ufikJ" crossorigin="anonymous">
+
+    <%= yield :head %>
+  </head>
+
+  <body>
+    <%= yield %>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-q6CqdMRjl2d7Z5IbMZD+Kbu0kjpoOzvS65mW2fXy+mB0ms+G3P+3IfmFYfRxFSTr" crossorigin="anonymous"></script>
+  </body>
+</html>
