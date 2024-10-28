@@ -11,6 +11,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  # Set the root path of the application
+  root "breeds#index"  # This will point to the breeds index as the home page
   resources :users, only: [ :index ]
   resources :breeds, only: [ :index ]
+
+  # About Page
+  get "/about", to: "pages#about", as: "about"
 end
