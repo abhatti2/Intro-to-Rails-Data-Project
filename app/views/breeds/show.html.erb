@@ -1,0 +1,38 @@
+<h1 class="text-center mb-4"><%= @breed.name %></h1>
+
+<div class="container mb-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <!-- Breed Details Card -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h4 class="card-title"><%= @breed.name %></h4>
+          <% if @breed.sub_breed.present? %>
+            <p class="card-text">Sub-breed: <strong><%= @breed.sub_breed %></strong></p>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Comments Section -->
+      <h3 class="mb-3">Comments</h3>
+      <% if @comments.any? %>
+        <% @comments.each do |comment| %>
+          <div class="card mb-2">
+            <div class="card-body">
+              <p><strong>User:</strong> <%= comment.user.name %></p>
+              <p><%= comment.content %></p>
+              <p class="text-muted"><small>Posted on <%= comment.created_at.strftime("%B %d, %Y") %></small></p>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Pagination for Comments -->
+        <div class="mt-3">
+          <%= paginate @comments %>
+        </div>
+      <% else %>
+        <div class="alert alert-warning">No comments available for this breed.</div>
+      <% end %>
+    </div>
+  </div>
+</div>

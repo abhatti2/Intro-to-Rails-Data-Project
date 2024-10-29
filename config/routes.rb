@@ -1,22 +1,22 @@
 Rails.application.routes.draw do
-  get "pages/about"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/*
+  # PWA files
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  # Defines the root path route ("/")
-  # root "posts#index"
-  # Set the root path of the application
-  root "breeds#index"  # This will point to the breeds index as the home page
-  resources :users, only: [ :index ]
-  resources :breeds, only: [ :index ]
-
   # About Page
   get "/about", to: "pages#about", as: "about"
+
+  # Set the root path of the application
+  root "breeds#index"  # This will point to the breeds index as the home page
+
+  # Users routes
+  resources :users, only: [ :index ]
+
+  # Breeds routes with `index` and `show`
+  resources :breeds, only: [ :index, :show ]  # Add `show` to enable breed detail pages
 end

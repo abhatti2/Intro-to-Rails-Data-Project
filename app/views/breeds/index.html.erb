@@ -23,7 +23,8 @@
               <div class="card h-100 mb-4">
                 <div class="card-body">
                   <h5 class="card-title">
-                    <strong><%= breed.name %></strong>
+                    <!-- Link to breed details page -->
+                    <strong><%= link_to breed.name, breed_path(breed) %></strong>
                     <% if breed.sub_breed.present? %>
                       (<%= breed.sub_breed %>)
                     <% end %>
