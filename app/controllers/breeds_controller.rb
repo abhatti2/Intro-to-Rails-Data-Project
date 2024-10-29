@@ -17,4 +17,9 @@ class BreedsController < ApplicationController
                      .per(10)  # Display 10 breeds per page
     end
   end
+
+  def show
+    @breed = Breed.find(params[:id])
+    @comments = @breed.comments.page(params[:page]).per(5)  # Paginate comments, 5 per page
+  end
 end
