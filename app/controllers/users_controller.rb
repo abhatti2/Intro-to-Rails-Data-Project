@@ -15,5 +15,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @comments = @user.comments.includes(:breed).page(params[:page]).per(5)  # Display 5 comments per page
+
+    # Fetch unique breeds the user has commented on
+    @unique_breeds = @user.comments.joins(:breed).select("breeds.*").distinct
   end
 end
