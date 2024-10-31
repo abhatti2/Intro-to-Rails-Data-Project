@@ -11,4 +11,9 @@ class UsersController < ApplicationController
                    .per(10)  # Display 10 users per page
     end
   end
+
+  def show
+    @user = User.find(params[:id])
+    @comments = @user.comments.includes(:breed).page(params[:page]).per(5)  # Display 5 comments per page
+  end
 end

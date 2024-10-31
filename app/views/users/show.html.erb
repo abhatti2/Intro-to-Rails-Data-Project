@@ -1,0 +1,20 @@
+<h1><%= @user.name %>'s Profile</h1>
+
+<p><strong>Email:</strong> <%= @user.email %></p>
+
+<h2>Comments</h2>
+
+<% if @comments.any? %>
+  <ul class="list-group">
+    <% @comments.each do |comment| %>
+      <li class="list-group-item">
+        <strong><%= link_to comment.breed.name, breed_path(comment.breed) %>:</strong>
+        <%= comment.content %>
+        <p class="text-muted"><small>Posted on <%= comment.created_at.strftime("%B %d, %Y") %></small></p>
+      </li>
+    <% end %>
+  </ul>
+  <%= paginate @comments %>
+<% else %>
+  <p>No comments available.</p>
+<% end %>

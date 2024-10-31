@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   root "breeds#index"  # This will point to the breeds index as the home page
 
   # Users routes
-  resources :users, only: [ :index ]
+  resources :users, only: [ :index, :show ]
 
   # Breeds routes with `index` and `show`
   resources :breeds, only: [ :index, :show ]  # Add `show` to enable breed detail pages
