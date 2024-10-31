@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   # About Page
   get "/about", to: "pages#about", as: "about"
 
+  # Map view for user locations
+  get "/users/map", to: "users#map", as: "users_map"
+
   # Set the root path of the application
   root "breeds#index"  # This will point to the breeds index as the home page
 

@@ -1,0 +1,29 @@
+<h1 class="text-center mb-4">User Locations</h1>
+
+<div class="container mb-4">
+  <!-- Map Container -->
+  <div id="map" style="height: 500px; width: 100%;"></div>
+</div>
+
+<!-- Leaflet CSS and JS Links -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha384-XQoYMqmtkpD7+roVDjNYkFZHhjVbG+ybPbD5qSK5lgas/svAgbM5LZjlk68+AKWl" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha384-sA+taYkLwBfCR5L2gsdRQ+RZCwzK1cZ5Nk5Yy5RM8pM/C9sPNl/p47JMFy3qEXXg" crossorigin=""></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var map = L.map('map').setView([20, 0], 2);  // Center at a global view
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Add markers for each user if they exist
+    <% @users.each do |user| %>
+      L.marker([<%= user.latitude %>, <%= user.longitude %>])
+        .addTo(map)
+        .bindPopup("<strong><%= user.name %></strong><br><%= user.email %>");
+    <% end %>
+  });
+</script>
+

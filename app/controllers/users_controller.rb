@@ -19,4 +19,9 @@ class UsersController < ApplicationController
     # Fetch unique breeds the user has commented on
     @unique_breeds = @user.comments.joins(:breed).select("breeds.*").distinct
   end
+
+  def map
+    # Retrieve all users with latitude and longitude
+    @users = User.where.not(latitude: nil, longitude: nil)
+  end
 end
