@@ -1,5 +1,10 @@
 require 'faker'
 
+# Define possible values for hierarchical attributes
+GROUPS = [ 'Sporting', 'Working', 'Hound', 'Toy', 'Non-Sporting', 'Terrier', 'Herding' ]
+SIZES = [ 'Small', 'Medium', 'Large' ]
+PURPOSES = [ 'Hunting', 'Companion', 'Guarding', 'Working', 'Show' ]
+
 # Create 50 users with random locations using Faker
 50.times do
   User.create(
@@ -10,8 +15,16 @@ require 'faker'
   )
 end
 
-# Create comments for random breeds
+# Create breeds with hierarchical attributes and comments
 Breed.all.each do |breed|
+  # Update each breed with random hierarchical attributes
+  breed.update(
+    group: GROUPS.sample,
+    size: SIZES.sample,
+    purpose: PURPOSES.sample
+  )
+
+  # Create a random number of comments for each breed
   rand(5..10).times do
     Comment.create(
       user: User.order('RANDOM()').first,  # Selects a random user for each comment
