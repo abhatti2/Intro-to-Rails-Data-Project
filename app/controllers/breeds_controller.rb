@@ -18,10 +18,10 @@ class BreedsController < ApplicationController
     # Paginate results
     @breeds = @breeds.page(params[:page]).per(10) # Display 10 breeds per page
 
-    # For filtering options in the view
-    @groups = Breed.distinct.pluck(:group)
-    @sizes = Breed.distinct.pluck(:size)
-    @purposes = Breed.distinct.pluck(:purpose)
+    # For filtering options in the view, exclude nil and empty strings
+    @groups = Breed.where.not(group: [ nil, "" ]).distinct.pluck(:group)
+    @sizes = Breed.where.not(size: [ nil, "" ]).distinct.pluck(:size)
+    @purposes = Breed.where.not(purpose: [ nil, "" ]).distinct.pluck(:purpose)
   end
 
   def show
@@ -39,6 +39,11 @@ class BreedsController < ApplicationController
                    .order(:name)
                    .page(params[:page])
                    .per(10)
+
+    # For filtering options in the view, exclude nil and empty strings
+    @groups = Breed.where.not(group: [ nil, "" ]).distinct.pluck(:group)
+    @sizes = Breed.where.not(size: [ nil, "" ]).distinct.pluck(:size)
+    @purposes = Breed.where.not(purpose: [ nil, "" ]).distinct.pluck(:purpose)
 
     # Render the index view for consistency
     render :index
