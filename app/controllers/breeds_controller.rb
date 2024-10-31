@@ -22,4 +22,19 @@ class BreedsController < ApplicationController
     @breed = Breed.find(params[:id])
     @comments = @breed.comments.page(params[:page]).per(5)  # Paginate comments, 5 per page
   end
+
+  def alphabet
+    # Get the letter from params and filter breeds by the first letter of the name
+    letter = params[:letter]
+    @breeds = Breed.where("name LIKE ?", "#{letter}%")
+                   .left_joins(:comments)
+                   .group(:id)
+                   .select("breeds.*, COUNT(comments.id) AS comments_count")
+                   .order(:name)
+                   .page(params[:page])
+                   .per(10)
+
+    # Render the index view for consistency
+    render :index
+  end
 end

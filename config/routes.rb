@@ -18,5 +18,9 @@ Rails.application.routes.draw do
   resources :users, only: [ :index, :show ]
 
   # Breeds routes with `index` and `show`
-  resources :breeds, only: [ :index, :show ]  # Add `show` to enable breed detail pages
+  resources :breeds, only: [ :index, :show ] do
+    collection do
+      get "alphabet/:letter", action: :alphabet, as: :alphabet  # Custom route for alphabetical filtering
+    end
+  end
 end

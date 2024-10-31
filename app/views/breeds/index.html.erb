@@ -1,5 +1,13 @@
 <h1 class="text-center mb-4">Breeds</h1>
 
+<!-- Alphabetical Navigation Links -->
+<div class="container mb-4 text-center">
+  <p>Filter by First Letter:</p>
+  <% ('A'..'Z').each do |letter| %>
+    <%= link_to letter, alphabet_breeds_path(letter: letter), class: "btn btn-outline-primary m-1" %>
+  <% end %>
+</div>
+
 <!-- Search Form -->
 <div class="container mb-4">
   <div class="row justify-content-center">
@@ -43,12 +51,8 @@
 </div>
 
 <!-- Pagination Links -->
-<div class="container mb-4">
-  <div class="row">
-    <div class="col-md-12 text-center">
-      <%= paginate @breeds %> <!-- Pagination links for breeds -->
-    </div>
-  </div>
+<div class="container mb-4 text-center">
+  <%= paginate @breeds %> <!-- Pagination links for breeds -->
 </div>
 
 <!-- Google Chart Section -->
