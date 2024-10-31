@@ -4,10 +4,16 @@ Rails.application.configure do
     policy.font_src    :self, :https, :data
     policy.img_src     :self, :https, :data
     policy.object_src  :none
-    policy.script_src  :self, :https, :unsafe_inline  # Allow inline scripts
-    policy.style_src   :self, :https, :unsafe_inline  # Allow inline styles for Leaflet
+
+    # Allow Leaflet map scripts and styles
+    policy.script_src  :self, :https, :unsafe_inline, :unsafe_eval  # Enable inline scripts
+    policy.style_src   :self, :https, :unsafe_inline  # Enable inline styles
+
+    # Enable nonce generation for additional CSP protection
+    config.content_security_policy_nonce_generator = ->(request) { SecureRandom.base64(16) }
+    config.content_security_policy_nonce_directives = %w[script-src style-src]
   end
 
-  # Enable nonces for inline scripts and styles if needed
-  config.content_security_policy_nonce_generator = ->(request) { SecureRandom.base64(16) }
+  # Report violations instead of enforcing to debug
+  config.content_security_policy_report_only = true
 end
